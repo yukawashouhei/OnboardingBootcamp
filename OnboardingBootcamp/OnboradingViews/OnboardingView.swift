@@ -16,7 +16,7 @@ struct OnboardingView: View {
      3 - Add gender
      */
     
-    @State var onboardingState: Int = 0
+    @State var onboardingState: Int = 1
     
     var body: some View {
         ZStack {
@@ -25,6 +25,8 @@ struct OnboardingView: View {
                 switch onboardingState {
                 case 0:
                     welcomeSection
+                case 1:
+                    addNameSection
                 default:
                     RoundedRectangle(cornerRadius: 25.0)
                         .foregroundStyle(Color.green)
@@ -84,6 +86,20 @@ extension OnboardingView {
                 )
             Text("This is the #1 app for finding your match online! In this tutorial wea re practicing using Appstorage and other SwiftUI techniques.")
                 .fontWeight(.medium)
+                .foregroundStyle(.white)
+            Spacer()
+            Spacer()
+        }
+        .multilineTextAlignment(.center)
+        .padding(30)
+    }
+    
+    private var addNameSection: some View {
+        VStack(spacing: 40) {
+            Spacer()
+            Text("What's your name")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
                 .foregroundStyle(.white)
             Spacer()
             Spacer()
