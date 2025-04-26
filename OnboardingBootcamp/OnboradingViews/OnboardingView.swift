@@ -18,6 +18,9 @@ struct OnboardingView: View {
      */
     
     @State var onboardingState: Int = 0
+    let transition: AnyTransition = .asymmetric(
+        insertion: .move(edge: .trailing),
+        removal: .move(edge: .leading))
     
     @State var name: String = ""
     @State var age: Double = 50
@@ -26,19 +29,23 @@ struct OnboardingView: View {
     var body: some View {
         ZStack {
             GradientStyles.backgroundGradient
-                    .ignoresSafeArea()
+                .ignoresSafeArea()
             
             // content
             ZStack {
                 switch onboardingState {
                 case 0:
                     welcomeSection
+                        .transition(transition)
                 case 1:
                     addNameSection
+                        .transition(transition)
                 case 2:
                     addAgeSection
+                        .transition(transition)
                 case 3:
                     addGenderSection
+                        .transition(transition)
                 default:
                     RoundedRectangle(cornerRadius: 25.0)
                         .foregroundStyle(Color.green)
