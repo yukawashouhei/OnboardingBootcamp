@@ -9,14 +9,15 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    /* Onboarding States:
+    //Onboarding States:
+    /*
      0 - Welcome screen
      1 - Add name
      2 - Add age
      3 - Add gender
      */
     
-    @State var onboardingState: Int = 3
+    @State var onboardingState: Int = 0
     
     @State var name: String = ""
     @State var age: Double = 50
@@ -24,6 +25,9 @@ struct OnboardingView: View {
     
     var body: some View {
         ZStack {
+            GradientStyles.backgroundGradient
+                    .ignoresSafeArea()
+            
             // content
             ZStack {
                 switch onboardingState {
@@ -47,7 +51,6 @@ struct OnboardingView: View {
             }
             .padding(30)
         }
-        .background(Color.purple)
     }
     
     
@@ -57,22 +60,25 @@ struct OnboardingView: View {
     OnboardingView()
 }
 
-// Mark: COMPONENTS
+// MARK: COMPONENTS
 
 extension OnboardingView {
     
     private var bottomButton: some View {
-        Text("Sign in")
-            .font(.headline)
-            .foregroundStyle(.purple)
-            .frame(height: 55)
-            .frame(maxWidth: .infinity)
-            .background(Color.white)
-            .cornerRadius(10)
-            .onTapGesture {
-                
-            }
+        Text(onboardingState == 0 ? "SIGN UP" :
+                onboardingState == 3 ? "FINISH" : "NEXT")
+        .font(.headline)
+        .foregroundStyle(.purple)
+        .frame(height: 55)
+        .frame(maxWidth: .infinity)
+        .background(Color.white)
+        .cornerRadius(10)
+        .animation(nil, value: UUID())
+        .onTapGesture {
+            handleNextButtonPressed()
+        }
     }
+    
     private var welcomeSection: some View {
         VStack(spacing: 40) {
             Spacer()
@@ -92,7 +98,7 @@ extension OnboardingView {
                         .foregroundColor(.white)
                     , alignment: .bottom
                 )
-            Text("This is the #1 app for finding your match online! In this tutorial wea re practicing using Appstorage and other SwiftUI techniques.")
+            Text("This is the #1 app for finding your match online! In this tutorial wea re practicing using AppStorage and other SwiftUI techniques.")
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
             Spacer()
@@ -101,7 +107,6 @@ extension OnboardingView {
         .multilineTextAlignment(.center)
         .padding(30)
     }
-    
     
     private var addNameSection: some View {
         VStack(spacing: 20) {
@@ -161,7 +166,6 @@ extension OnboardingView {
                 HStack {
                     
                     Text(gender.isEmpty ? "Select a gender" : gender)
-                    
                 }
                 .font(.headline)            // フォント
                 .foregroundStyle(.purple)   // 文字色
@@ -171,10 +175,26 @@ extension OnboardingView {
                 .background(Color.white)    // 背景色
                 .cornerRadius(10)           // 角丸
             }
-            
             Spacer()
             Spacer()
         }
         .padding(30)
+    }
+}
+
+//MARK: FUNCTIONS
+
+extension OnboardingView {
+    
+    
+    func handleNextButtonPressed() {
+        
+        if onboardingState == 3 {
+            // sign in
+        } else {
+            withAnimation(.spring()) {
+                onboardingState += 1
+            }
+        }
     }
 }
