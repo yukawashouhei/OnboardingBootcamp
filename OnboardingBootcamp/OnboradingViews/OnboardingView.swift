@@ -22,12 +22,20 @@ struct OnboardingView: View {
         insertion: .move(edge: .trailing),
         removal: .move(edge: .leading))
     
+    //onboarding inputs
     @State var name: String = ""
     @State var age: Double = 50
     @State var gender: String = ""
     
+    //for the alert
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
+    
+    // app storage
+    @AppStorage("name") var currentUserName: String?
+    @AppStorage("age") var currentUserAge: Int?
+    @AppStorage("gender") var currentUserGender: String?
+    @AppStorage("signed_in") var currentUserSignedIN: Bool = false
     
     var body: some View {
         ZStack {
@@ -211,7 +219,8 @@ extension OnboardingView {
             }
         case 3:
             guard gender.count > 1 else {
-                showAlert(title: "Please select a gender before ")
+                showAlert(title: "Please select a gender before moving forward!😌")
+                return
             }
         default:
             break
@@ -219,11 +228,20 @@ extension OnboardingView {
         
         // GO TO NEXT SECTION
         if onboardingState == 3 {
-            // sign in
+            signIn()
         } else {
             withAnimation(.spring()) {
                 onboardingState += 1
             }
+        }
+    }
+    
+    func signIn() {
+        currentUserName = name
+        currentUserAge = Int(age)
+        currentUserGender = gender
+        withAnimation(.spring()) {
+            currentUserSignedIN = true
         }
     }
     
