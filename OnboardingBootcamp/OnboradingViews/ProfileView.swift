@@ -15,8 +15,17 @@ struct ProfileView: View {
     @AppStorage("gender") var currentUserGender: String?
     @AppStorage("signed_in") var currentUserSignedIN: Bool = false
     
+    let profileGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color(hue: 0.7, saturation: 0.6, brightness: 0.9), // 紫がかった青
+            Color(hue: 0.7, saturation: 0.9, brightness: 1.0)  // 明るい紫がかった青
+        ]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Image(systemName: "person.circle.fill")
                 .resizable()
                 .scaledToFit()
@@ -24,6 +33,17 @@ struct ProfileView: View {
             Text(currentUserName ?? "Your name here")
             Text("This user is \(currentUserAge ?? 0) years old.")
             Text("Their gender is \(currentUserGender ?? "unknown")")
+            
+            Text("SIGN OUT")
+                .foregroundStyle(.white)
+                .font(.headline)
+                .frame(height: 55)
+                .frame(maxWidth: .infinity)
+                .background(profileGradient)
+                .cornerRadius(10)
+                .onTapGesture {
+                    signOut()
+                }
         }
         .font(.title)
         .foregroundStyle(
@@ -40,6 +60,15 @@ struct ProfileView: View {
         .padding(.vertical, 40)
         .background(Color.white)
         .shadow(radius: 10)
+    }
+    
+    func signOut() {
+        currentUserName = nil
+        currentUserAge = nil
+        currentUserGender = nil
+        withAnimation(.spring()) {
+            currentUserSignedIN = false
+        }
     }
 }
 
