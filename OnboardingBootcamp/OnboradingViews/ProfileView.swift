@@ -2,7 +2,7 @@
 //  ProfileView.swift
 //  OnboardingBootcamp
 //
-//  Created by 湯川昇平 on 2025/04/26.
+//   on 2025/04/26.
 //
 
 import SwiftUI
@@ -17,8 +17,8 @@ struct ProfileView: View {
     
     let profileGradient = LinearGradient(
         gradient: Gradient(colors: [
-            Color(hue: 0.7, saturation: 0.6, brightness: 0.9), // 紫がかった青
-            Color(hue: 0.7, saturation: 0.9, brightness: 1.0)  // 明るい紫がかった青
+            Color(hue: 0.7, saturation: 0.6, brightness: 0.9),
+            Color(hue: 0.7, saturation: 0.9, brightness: 1.0)
         ]),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
